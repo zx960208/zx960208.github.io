@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.2/dist/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="timer"></div>
+    <!-- <div id="main" style="width: 100vw;height:100vh;"></div> -->
+    <div class="radis">
+        <div class="centers">
+            <div class="hour" id="hours"></div>
+            <div class="second" id="seconds"></div>
+            <div class="minute" id="minutes"></div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    // var myChart = echarts.init(document.getElementById('main'));
+
+    // // 指定图表的配置项和数据
+    // var option = {
+    //     title: {
+    //         text: 'ECharts 入门示例'
+    //     },
+    //     tooltip: {},
+    //     legend: {
+    //         data: ['销量']
+    //     },
+    //     yAxis: {
+    //         type: 'category'
+    //     },
+    //     xAxis: {
+    //         inverse: true
+    //     },
+    //     series: [
+    //         {
+    //             type: 'pie',
+    //             data: [{name: '2023-05-01', value: 5}, {name: '2023-05-02', value: 22}],
+    //         }
+    //     ]
+    // };
+    let i = 0
+
+    function getNowTime() {
+        let dates = new Date();
+        let hour = dates.getHours()
+        let minute = dates.getMinutes()
+        let second = dates.getSeconds()
+        if (minute < 10) {
+            minute = "0" + minute
+        }
+        if (second < 10) {
+            second = "0" + second
+        }
+        return hour + ":" + minute + ":" + second
+    }
+
+    setInterval(function () {
+        let datea = new Date();
+        let seconds = datea.getSeconds();
+        let hours = datea.getHours();
+        let minutes = datea.getMinutes();
+        if (hours > 12) {
+            hours = hours - 12
+        }
+
+        i = 6 * seconds
+        // myChart.setOption(option);
+        document.getElementById("timer").innerHTML = getNowTime()
+        // document.getElementById("timer").setAttribute("style", "transform:rotate(" + i + "deg) translate(-50%, -50%);transform-origin:center center;")
+        document.getElementById("seconds").setAttribute("style", "transform:rotate(" + i + "deg);")
+        document.getElementById("hours").setAttribute("style", "transform:rotate(" + (hours + minutes / 60 + seconds / 3600) * 30 + "deg);")
+        document.getElementById("minutes").setAttribute("style", "transform:rotate(" + (minutes + seconds / 60) * 6 + "deg);")
+    }, 1000)
+    // 使用刚指定的配置项和数据显示图表。
+
+</script>
+<style>
+    #timer {
+        height: 10vh;
+        font-weight: bold;
+        font-size: 8vh;
+        font-family: "PingFangSC-Ultralight, sans-serif";
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transform-origin: center center;
+        z-index: 10;
+    }
+
+    .radis {
+        border: 1px solid red;
+        width: 20vw;
+        height: 20vw;
+        border-radius: 10vw;
+    }
+
+    .second {
+        background-color: rgb(255, 0, 0);
+        width: 2px;
+        height: 10vw;
+        position: relative;
+        top: -15vw;
+        left: 1vw;
+        /* left: 10vw; */
+        /* transform: translate(-50%); */
+        transform-origin: bottom;
+    }
+
+    .hour {
+        background-color: aqua;
+        width: 5px;
+        height: 6vw;
+        top: -5vw;
+        left: 1vw;
+        position: relative;
+        transform: translate(-50%, 0%);
+        /* transform: rotate(30deg); */
+        transform-origin: bottom;
+    }
+
+    .centers {
+        width: 2vw;
+        height: 2vw;
+        background-color: black;
+        border-radius: 1vw;
+        position: relative;
+        left: 10vw;
+        top: 10vw;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+    }
+
+    .minute {
+        background-color: rgb(25, 0, 255);
+        width: 3px;
+        height: 7vw;
+        top: -22vw;
+        left: 1vw;
+        position: relative;
+        transform: translate(-50%, 0%);
+        /* transform: rotate(30deg); */
+        transform-origin: bottom;
+    }
+</style>
